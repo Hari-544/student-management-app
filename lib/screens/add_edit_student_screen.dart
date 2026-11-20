@@ -19,8 +19,8 @@ class AddEditStudentScreen extends StatefulWidget {
 }
 
 class _AddEditStudentScreenState extends State<AddEditStudentScreen> {
-  final _formKey    = GlobalKey<FormState>();
-  final _db         = DatabaseHelper();
+  final _formKey = GlobalKey<FormState>();
+  final _db = DatabaseHelper();
 
   // Text controllers
   late final TextEditingController _rollController;
@@ -31,7 +31,7 @@ class _AddEditStudentScreenState extends State<AddEditStudentScreen> {
   late final TextEditingController _phoneController;
 
   String _selectedGender = 'Male';
-  bool   _isSaving       = false;
+  bool _isSaving = false;
 
   static const _genders = ['Male', 'Female', 'Other'];
 
@@ -41,13 +41,13 @@ class _AddEditStudentScreenState extends State<AddEditStudentScreen> {
   void initState() {
     super.initState();
     final s = widget.student;
-    _rollController   = TextEditingController(text: s?.rollNumber ?? '');
-    _nameController   = TextEditingController(text: s?.fullName   ?? '');
-    _ageController    = TextEditingController(text: s != null ? '${s.age}' : '');
-    _courseController = TextEditingController(text: s?.course     ?? '');
-    _emailController  = TextEditingController(text: s?.email      ?? '');
-    _phoneController  = TextEditingController(text: s?.phone      ?? '');
-    _selectedGender   = s?.gender ?? 'Male';
+    _rollController = TextEditingController(text: s?.rollNumber ?? '');
+    _nameController = TextEditingController(text: s?.fullName ?? '');
+    _ageController = TextEditingController(text: s != null ? '${s.age}' : '');
+    _courseController = TextEditingController(text: s?.course ?? '');
+    _emailController = TextEditingController(text: s?.email ?? '');
+    _phoneController = TextEditingController(text: s?.phone ?? '');
+    _selectedGender = s?.gender ?? 'Male';
   }
 
   @override
@@ -73,14 +73,14 @@ class _AddEditStudentScreenState extends State<AddEditStudentScreen> {
     setState(() => _isSaving = true);
 
     final student = Student(
-      id:         widget.student?.id,
+      id: widget.student?.id,
       rollNumber: _rollController.text.trim(),
-      fullName:   _nameController.text.trim(),
-      age:        int.parse(_ageController.text.trim()),
-      gender:     _selectedGender,
-      course:     _courseController.text.trim(),
-      email:      _emailController.text.trim(),
-      phone:      _phoneController.text.trim(),
+      fullName: _nameController.text.trim(),
+      age: int.parse(_ageController.text.trim()),
+      gender: _selectedGender,
+      course: _courseController.text.trim(),
+      email: _emailController.text.trim(),
+      phone: _phoneController.text.trim(),
     );
 
     try {
@@ -152,7 +152,7 @@ class _AddEditStudentScreenState extends State<AddEditStudentScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 // ── Section: Identity ─────────────────────────────────────────
-                _SectionHeader(label: 'Identity'),
+                const _SectionHeader(label: 'Identity'),
                 const SizedBox(height: 12),
 
                 _buildField(
@@ -217,7 +217,7 @@ class _AddEditStudentScreenState extends State<AddEditStudentScreen> {
                     Expanded(
                       flex: 3,
                       child: DropdownButtonFormField<String>(
-                        value: _selectedGender,
+                        initialValue: _selectedGender,
                         decoration: InputDecoration(
                           labelText: 'Gender',
                           prefixIcon: const Icon(Icons.wc_rounded),
@@ -244,7 +244,7 @@ class _AddEditStudentScreenState extends State<AddEditStudentScreen> {
                 const SizedBox(height: 22),
 
                 // ── Section: Academic ─────────────────────────────────────────
-                _SectionHeader(label: 'Academic'),
+                const _SectionHeader(label: 'Academic'),
                 const SizedBox(height: 12),
 
                 _buildField(
@@ -260,7 +260,7 @@ class _AddEditStudentScreenState extends State<AddEditStudentScreen> {
                 const SizedBox(height: 22),
 
                 // ── Section: Contact ──────────────────────────────────────────
-                _SectionHeader(label: 'Contact'),
+                const _SectionHeader(label: 'Contact'),
                 const SizedBox(height: 12),
 
                 _buildField(
@@ -316,8 +316,7 @@ class _AddEditStudentScreenState extends State<AddEditStudentScreen> {
                       : Icon(_isEditing
                           ? Icons.save_outlined
                           : Icons.person_add_alt_1_rounded),
-                  label:
-                      Text(_isEditing ? 'Save Changes' : 'Register Student'),
+                  label: Text(_isEditing ? 'Save Changes' : 'Register Student'),
                   style: FilledButton.styleFrom(
                     minimumSize: const Size.fromHeight(54),
                     textStyle: const TextStyle(

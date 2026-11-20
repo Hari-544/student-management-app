@@ -39,14 +39,26 @@ class _StudentListScreenState extends State<StudentListScreen> {
 
   Future<void> _loadStudents() async {
     setState(() => _isLoading = true);
-    final list = _query.isEmpty
-        ? await _db.getAllStudents()
-        : await _db.searchStudents(_query);
-    if (mounted) {
-      setState(() {
-        _students  = list;
-        _isLoading = false;
-      });
+    try {
+      final list = _query.isEmpty
+          ? await _db.getAllStudents()
+          : await _db.searchStudents(_query);
+      if (mounted) {
+        setState(() {
+          _students = list;
+          _isLoading = false;
+        });
+      }
+    } catch (error) {
+      if (mounted) {
+        setState(() {
+          _students = [];
+          _isLoading = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Unable to load students: $error')),
+        );
+      }
     }
   }
 

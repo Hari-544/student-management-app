@@ -31,8 +31,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadCount() async {
-    final count = await _db.getTotalCount();
-    if (mounted) setState(() => _studentCount = count);
+    try {
+      final count = await _db.getTotalCount();
+      if (mounted) setState(() => _studentCount = count);
+    } catch (error) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Unable to load student count: $error')),
+        );
+      }
+    }
   }
 
   // Navigate to add-student form and refresh count on return
